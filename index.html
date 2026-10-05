@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Inter:wght@300..700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&family=Inter:wght@300..700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2308090b'/%3E%3Cpath d='M16 4l3.6 8.3 9 .8-6.8 6 2 8.9L16 23.3 8.2 28l2-8.9-6.8-6 9-.8z' fill='none' stroke='%23cfd6dd' stroke-width='1.6'/%3E%3C/svg%3E">
 </head>
@@ -21,8 +21,8 @@
 
 <header class="topbar" id="topbar">
   <a class="topbar__mark" href="#top" aria-label="LOVEBITES — back to top">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.2l3.9 9 9.7.85-7.35 6.45 2.2 9.55L16 23.9 7.55 29.05l2.2-9.55L2.4 13.05l9.7-.85z"/></svg>
-    <span>LOVEBITES</span>
+    <img src="assets/img/mark-wolf.svg" alt="" aria-hidden="true">
+    <span class="wm" data-brand-text>LOVEBITES</span>
   </a>
   <nav class="topbar__nav" aria-label="Sections">
     <a href="#overview">Overview</a>
@@ -52,13 +52,19 @@
 <main id="main">
   <!-- ============ HERO ============ -->
   <section class="hero" id="top">
-    <div class="hero__grain" aria-hidden="true"></div>
-    <div class="hero__glow" aria-hidden="true"></div>
+    <img class="hero__bg" src="assets/img/hero-backdrop.svg" alt="" aria-hidden="true">
+    <div class="hero__vignette" aria-hidden="true"></div>
     <div class="hero__inner">
+      <img class="hero__crest" src="assets/img/mark-wolf.svg" alt="" aria-hidden="true">
       <p class="hero__eyebrow">Tokyo &middot; Heavy Metal &middot; 2016 &rarr; present</p>
-      <h1 class="hero__title" aria-label="LOVEBITES">
+
+      <!-- If assets/img/lovebites-logo.svg (or .png) exists it is used here.
+           Otherwise the typographic wordmark below is shown instead. -->
+      <h1 class="hero__title plat" id="heroTitle" aria-label="LOVEBITES">
         <span>L</span><span>O</span><span>V</span><span>E</span><span>B</span><span>I</span><span>T</span><span>E</span><span>S</span>
       </h1>
+
+      <img class="hero__rule" src="assets/img/ornament-divider.svg" alt="" aria-hidden="true">
       <p class="hero__sub">A complete, sourced history &mdash; from the ashes of Destrose to a sold-out Nippon Budokan.</p>
       <div class="hero__stats" id="heroStats"></div>
       <div class="hero__cta">
@@ -75,7 +81,7 @@
       <header class="sec-head">
         <p class="sec-head__kicker">00 &mdash; Orientation</p>
         <h2 class="sec-head__title">Who they are</h2>
-      </header>
+      <img class="sec-head__orn" src="assets/img/ornament-rule.svg" alt="" aria-hidden="true"></header>
       <div class="overview">
         <div class="overview__lede" id="overviewLede"></div>
         <aside class="factbox" id="factbox"></aside>
@@ -91,7 +97,7 @@
         <p class="sec-head__kicker">01 &mdash; Narrative</p>
         <h2 class="sec-head__title">The Story in Ten Chapters</h2>
         <p class="sec-head__blurb">Ten eras, from the backgrounds of five musicians who had never played together to a band headlining Japan's most storied arena. Jump to any chapter, or read straight through.</p>
-      </header>
+      <img class="sec-head__orn" src="assets/img/ornament-rule.svg" alt="" aria-hidden="true"></header>
       <ol class="chapter-rail" id="chapterRail" aria-label="Chapter index"></ol>
       <div class="chapters" id="chapters"></div>
     </div>
@@ -104,7 +110,7 @@
         <p class="sec-head__kicker">02 &mdash; The centrepiece</p>
         <h2 class="sec-head__title">Interactive Timeline</h2>
         <p class="sec-head__blurb">Every documented milestone, in order. Filter by category, jump by year, and open any linked release for the full detail.</p>
-      </header>
+      <img class="sec-head__orn" src="assets/img/ornament-rule.svg" alt="" aria-hidden="true"></header>
 
       <div class="tl-controls" role="group" aria-label="Timeline filters">
         <div class="tl-chips" id="tlChips"></div>
@@ -130,7 +136,7 @@
         <p class="sec-head__kicker">03 &mdash; Personnel</p>
         <h2 class="sec-head__title">Lineup &amp; Members</h2>
         <p class="sec-head__blurb">One founding bassist left; one hiatus split the band's life in two. The chart below maps every tenure against the calendar &mdash; hover or tap a bar for detail.</p>
-      </header>
+      <img class="sec-head__orn" src="assets/img/ornament-rule.svg" alt="" aria-hidden="true"></header>
 
       <div class="gantt" id="gantt" aria-label="Lineup tenure chart"></div>
 
@@ -145,7 +151,7 @@
         <p class="sec-head__kicker">04 &mdash; Recorded output</p>
         <h2 class="sec-head__title">Discography Explorer</h2>
         <p class="sec-head__blurb">Studio albums, EPs, singles, live records and compilations. Select any release for tracklist, lineup, context and sources.</p>
-      </header>
+      <img class="sec-head__orn" src="assets/img/ornament-rule.svg" alt="" aria-hidden="true"></header>
 
       <div class="disco-controls" role="group" aria-label="Discography filters">
         <div class="tl-chips" id="discoChips"></div>
@@ -162,7 +168,8 @@
       <header class="sec-head">
         <p class="sec-head__kicker">05 &mdash; Standing</p>
         <h2 class="sec-head__title">Legacy &amp; Position</h2>
-      </header>
+      <img class="sec-head__orn" src="assets/img/ornament-rule.svg" alt="" aria-hidden="true"></header>
+      <img class="legacy-seal" src="assets/img/crest-wolf.svg" alt="" aria-hidden="true" loading="lazy">
       <div class="legacy" id="legacyBody"></div>
       <div class="firsts" id="firsts"></div>
     </div>
@@ -175,7 +182,7 @@
         <p class="sec-head__kicker">06 &mdash; Receipts</p>
         <h2 class="sec-head__title">Sources &amp; Method</h2>
         <p class="sec-head__blurb">Everything on this page is drawn from the references below. Where sources conflict or a detail could not be corroborated, the page says so inline.</p>
-      </header>
+      <img class="sec-head__orn" src="assets/img/ornament-rule.svg" alt="" aria-hidden="true"></header>
       <div class="method" id="method"></div>
       <div class="sources" id="sourcesList"></div>
     </div>
@@ -184,6 +191,7 @@
 
 <footer class="foot">
   <div class="wrap">
+    <img class="foot__crest" src="assets/img/mark-wolf.svg" alt="" aria-hidden="true">
     <p class="foot__main">An independent, fan-made history. Not affiliated with LOVEBITES, Victor Entertainment, JPU Records or Napalm Records.</p>
     <p class="foot__meta">Release emblems on this page are original geometric artwork created for this site &mdash; they are <em>not</em> the official cover art. Content current as of <span id="asOf"></span>.</p>
   </div>

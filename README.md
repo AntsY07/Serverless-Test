@@ -6,6 +6,10 @@ and the road to a sold-out Nippon Budokan in 2026.
 
 Static site. No build step, no dependencies, no framework — open `index.html` and it runs.
 
+Visually it follows the band's own identity: platinum on obsidian, inscriptional Roman caps
+(Cinzel) over a Garamond text face, heraldic framing, and a wolf mark — monochrome first, with
+colour used only to separate timeline categories and member tenures.
+
 ## Contents
 
 | Section | What it does |
@@ -35,7 +39,22 @@ index.html              page shell and section scaffolding
 assets/css/styles.css   design system: tokens, layout, components, responsive, print
 assets/js/data.js       ALL factual content — members, chapters, timeline, releases, sources
 assets/js/app.js        rendering, filtering, modals, scroll behaviour, generated artwork
+assets/img/             hand-authored SVG artwork (see below)
 ```
+
+### Artwork files
+
+| File | Used for |
+| --- | --- |
+| `mark-wolf.svg` | The wolf mark — nav bar, hero, footer |
+| `crest-wolf.svg` | Framed version of the same crest — seal above the Legacy section |
+| `hero-backdrop.svg` | Cathedral arch and pentagram geometry behind the hero |
+| `chapter-01…10-*.svg` | One heraldic plate per narrative chapter |
+| `ornament-divider.svg` | Separator between chapters, and under the hero wordmark |
+| `ornament-rule.svg` | Small rule under each section heading |
+
+Release emblems in the discography are generated in code (`MOTIFS` in `app.js`) in the same
+heraldic style, so a new release only needs a `motif` and two colours in `data.js`.
 
 **All content lives in `data.js`.** To correct a fact, add an event or add a release, edit that file —
 nothing in `app.js` needs to change. Source ids in each entry's `src` array resolve against
@@ -56,12 +75,35 @@ nothing in `app.js` needs to change. Source ids in each entry's `src` array reso
   drawn about private matters.
 - Content is current as of **October 2026**.
 
+## The band's logo
+
+**The official LOVEBITES logo is not in this repository**, and the site does not ship a copy of it.
+The build environment had no network access to the band's or label's sites, so the real mark could
+not be retrieved, and guessing at it from memory would have produced something inaccurate.
+
+The page is wired to use it the moment you supply it. Drop the file in as:
+
+```
+assets/img/lovebites-logo.svg      (preferred)
+assets/img/lovebites-logo.png      (also accepted)
+```
+
+On load the page probes for that file. If it is there, it replaces both the hero wordmark and the
+mark in the navigation bar automatically — no code change needed. If it is absent (the current
+state), the page falls back to the typographic wordmark set in Cinzel, and you will see two
+harmless 404s in the console from the probe. See `assets/img/README-logo.txt` and the
+`brandMark()` function in `app.js`.
+
 ## A note on the artwork
 
-The square emblems in the discography are **original geometric illustrations generated in code**
-(`MOTIFS` in `app.js`), one per release, in era-appropriate palettes. They are *not* the official
-cover art and are not intended to resemble it. For the real sleeves, see the band's official
-discography, linked from the page.
+Every image in `assets/img/` is **original artwork drawn for this project** — heraldic plates,
+the wolf mark, the ornaments and the hero backdrop — as are the release emblems generated in
+`app.js`. None of it is the band's own art, none of it reproduces their cover sleeves, and the wolf
+mark is an original heraldic rendering rather than a copy of the band's emblem.
+
+There are **no photographs** on the page. Press and live photography of the band is copyrighted and
+could not be licensed or retrieved here, so the design uses illustration throughout instead. For the
+real sleeves and photographs, follow the official discography and label links on the page.
 
 ## Accessibility & performance
 

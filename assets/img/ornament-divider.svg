@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 44" width="640" height="44" role="img" aria-label="Ornamental divider">
+  <g fill="none" stroke="#d8dee6" stroke-linecap="round">
+    <path d="M0 22 H236" stroke-width="1" opacity=".35"/>
+    <path d="M404 22 H640" stroke-width="1" opacity=".35"/>
+    <path d="M236 22 C262 22 272 10 286 10 C298 10 304 16 304 22 C304 28 298 34 286 34 C272 34 262 22 236 22Z" stroke-width="1.5" opacity=".7"/>
+    <path d="M404 22 C378 22 368 10 354 10 C342 10 336 16 336 22 C336 28 342 34 354 34 C368 34 378 22 404 22Z" stroke-width="1.5" opacity=".7"/>
+  </g>
+  <path d="M320 11L326.5 30.9L309.5 18.6L330.5 18.6L313.5 30.9Z" fill="#d8dee6" opacity=".9"/>
+  <circle cx="268" cy="22" r="2" fill="#d8dee6" opacity=".7"/>
+  <circle cx="372" cy="22" r="2" fill="#d8dee6" opacity=".7"/>
+</svg>

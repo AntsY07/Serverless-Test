@@ -218,26 +218,53 @@
       }
     };
     var motif = (MOTIFS[art.motif] || MOTIFS.fang)(s);
+    var corner = function (x, y, sx, sy) {
+      return '<path d="M' + x + ' ' + y + ' h' + (42 * sx) + ' M' + x + ' ' + y + ' v' + (42 * sy) +
+             ' M' + x + ' ' + y + ' l' + (17 * sx) + ' ' + (17 * sy) + '" stroke="' + a +
+             '" stroke-width="1.1" fill="none" opacity=".5"/>';
+    };
     return '<svg viewBox="0 0 400 400" role="img" aria-label="' + title.replace(/"/g, '') + ' — stylised emblem (not official cover art)" preserveAspectRatio="xMidYMid slice">' +
       '<defs>' +
-        '<radialGradient id="' + id + 'bg" cx="50%" cy="34%" r="78%">' +
+        '<radialGradient id="' + id + 'bg" cx="50%" cy="36%" r="78%">' +
           '<stop offset="0%" stop-color="' + b + '"/>' +
-          '<stop offset="62%" stop-color="#0a0c10"/>' +
-          '<stop offset="100%" stop-color="#050608"/>' +
+          '<stop offset="60%" stop-color="#090b0f"/>' +
+          '<stop offset="100%" stop-color="#05060a"/>' +
         '</radialGradient>' +
-        '<linearGradient id="' + id + 'sh" x1="0" y1="0" x2="1" y2="1">' +
-          '<stop offset="0%" stop-color="#fff" stop-opacity=".07"/>' +
-          '<stop offset="55%" stop-color="#fff" stop-opacity="0"/>' +
+        '<linearGradient id="' + id + 'sh" x1="0" y1="0" x2=".7" y2="1">' +
+          '<stop offset="0%" stop-color="#fff" stop-opacity=".09"/>' +
+          '<stop offset="48%" stop-color="#fff" stop-opacity="0"/>' +
+          '<stop offset="100%" stop-color="#fff" stop-opacity=".035"/>' +
         '</linearGradient>' +
       '</defs>' +
       '<rect width="400" height="400" fill="url(#' + id + 'bg)"/>' +
-      '<g opacity=".25">' +
-        '<path d="M0 0 H400 M0 100 H400 M0 200 H400 M0 300 H400 M0 400 H400" stroke="#fff" stroke-opacity=".03"/>' +
-        '<path d="M0 0 V400 M100 0 V400 M200 0 V400 M300 0 V400 M400 0 V400" stroke="#fff" stroke-opacity=".03"/>' +
+      '<g opacity=".2" stroke="#fff" stroke-opacity=".5" stroke-width=".4">' +
+        '<path d="M0 50 H400 M0 100 H400 M0 150 H400 M0 200 H400 M0 250 H400 M0 300 H400 M0 350 H400"/>' +
+        '<path d="M50 0 V400 M100 0 V400 M150 0 V400 M200 0 V400 M250 0 V400 M300 0 V400 M350 0 V400"/>' +
       '</g>' +
+      s.ring(200, 200, 179, .3) +
+      '<circle cx="200" cy="200" r="172" fill="none" stroke="' + a + '" stroke-width="1.7" opacity=".7"/>' +
+      s.ticks(200, 200, 179, 188, 72, .2) +
       motif +
-      '<rect x="14" y="14" width="372" height="372" fill="none" stroke="' + a + '" stroke-opacity=".3"/>' +
+      corner(20, 20, 1, 1) + corner(380, 20, -1, 1) + corner(20, 380, 1, -1) + corner(380, 380, -1, -1) +
+      '<rect x="11" y="11" width="378" height="378" fill="none" stroke="' + a + '" stroke-opacity=".26"/>' +
       '<rect width="400" height="400" fill="url(#' + id + 'sh)"/>' +
+    '</svg>';
+  }
+
+
+  /* small heraldic shield used for each member, tinted to their colour */
+  function memberSigil(m, px) {
+    var sid = 'sg' + (++artSeq);
+    return '<svg class="member__sigil" viewBox="0 0 100 100" role="img" aria-label="' + m.name + ' sigil"' +
+      (px ? ' style="width:' + px + 'px;height:' + px + 'px"' : '') + '>' +
+      '<defs><linearGradient id="' + sid + '" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="' + m.color + '" stop-opacity=".30"/>' +
+        '<stop offset="100%" stop-color="' + m.color + '" stop-opacity=".04"/>' +
+      '</linearGradient></defs>' +
+      '<path d="M50 6 L88 20 V50 C88 72 70 86 50 94 C30 86 12 72 12 50 V20 Z" fill="url(#' + sid + ')" stroke="' + m.color + '" stroke-width="2"/>' +
+      '<path d="M50 14 L80 25 V50 C80 68 65 80 50 87 C35 80 20 68 20 50 V25 Z" fill="none" stroke="' + m.color + '" stroke-width=".8" opacity=".45"/>' +
+      '<text x="50" y="59" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="30" font-weight="600" fill="' + m.color + '">' + m.mono + '</text>' +
+      '<path d="M38 70 h24" stroke="' + m.color + '" stroke-width="1.2" opacity=".55"/>' +
     '</svg>';
   }
 
@@ -277,7 +304,7 @@
   }).join('') + '</dl>';
 
   $('#methodNotice').innerHTML = '<strong>How to read this page.</strong> Every section links out to its sources, and the ' +
-    '<a href="#sources" style="color:var(--steel)">Sources &amp; Method</a> block at the foot lists them in full. ' +
+    '<a href="#sources" style="color:var(--silver)">Sources &amp; Method</a> block at the foot lists them in full. ' +
     'Where a detail rests on a single report, or where sources disagree, you will see a dashed amber note like this one attached to the claim itself rather than a confident assertion.';
 
   $('#method').innerHTML = LB.method.map(function (m) {
@@ -291,14 +318,25 @@
     return '<li><a href="#' + c.id + '"><em>' + c.num + '</em><b>' + c.title + '</b><span>' + c.years + '</span></a></li>';
   }).join('');
 
-  $('#chapters').innerHTML = LB.chapters.map(function (c) {
-    var html = '<article class="chapter reveal" id="' + c.id + '">' +
-      '<div class="chapter__aside"><div class="chapter__num">' + c.num + '</div><div class="chapter__years">' + c.years + '</div></div>' +
+  var CHAPTER_PLATES = [
+    'chapter-01-origins', 'chapter-02-formation', 'chapter-03-early', 'chapter-04-rise',
+    'chapter-05-albums', 'chapter-06-lineup', 'chapter-07-hiatus', 'chapter-08-return',
+    'chapter-09-recent', 'chapter-10-legacy'
+  ];
+
+  $('#chapters').innerHTML = LB.chapters.map(function (c, ci) {
+    var html = (ci ? '<img class="chapter-sep" src="assets/img/ornament-divider.svg" alt="" aria-hidden="true">' : '') +
+      '<article class="chapter reveal" id="' + c.id + '">' +
+      '<div class="chapter__aside">' +
+        '<img class="chapter__plate" src="assets/img/' + CHAPTER_PLATES[ci] + '.svg" alt="" aria-hidden="true" loading="lazy" width="520" height="520">' +
+        '<div class="chapter__num">' + c.num + '</div>' +
+        '<div class="chapter__years">' + c.years + '</div>' +
+      '</div>' +
       '<div class="chapter__body"><h3>' + c.title + '</h3>' +
       c.body.map(function (p) { return '<p>' + p + '</p>'; }).join('');
     if (c.pull) html += '<blockquote class="pull">&ldquo;' + c.pull.q + '&rdquo;<cite>' + c.pull.c + '</cite></blockquote>';
     if (c.facts) html += '<ul class="keyfacts">' + c.facts.map(function (f) { return '<li><b>' + f.b + '</b>' + f.t + '</li>'; }).join('') + '</ul>';
-    if (c.src) html += '<div style="margin-top:1.3rem"><h4 style="margin:0 0 .5rem;font-family:var(--ff-display);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint);font-weight:500">Sources for this chapter</h4><ul class="srclist">' + srcLinks(c.src) + '</ul></div>';
+    if (c.src) html += '<div class="chapter-src" style="margin-top:1.6rem"><h4>Sources for this chapter</h4><ul class="srclist">' + srcLinks(c.src) + '</ul></div>';
     html += '</div></article>';
     return html;
   }).join('');
@@ -324,7 +362,7 @@
   }).join('');
 
   function eventHTML(e) {
-    var c = catMap[e.cat] || { color: 'var(--steel)', label: e.cat };
+    var c = catMap[e.cat] || { color: 'var(--silver)', label: e.cat };
     var h = '<li class="tl-item" data-cat="' + e.cat + '" data-year="' + e.y + '" style="--cat:' + c.color + '">' +
       '<div class="tl-card">' +
         '<div class="tl-card__top"><span class="tl-date">' + e.label + '</span><span class="tag">' + c.label + '</span></div>' +
@@ -449,9 +487,9 @@
     '<div class="gantt__head">' +
       '<h3>Tenures, 2016 &rarr; 2026</h3>' +
       '<div class="gantt__legend">' +
-        '<span><i style="background:var(--steel)"></i>Active</span>' +
-        '<span><i style="background:repeating-linear-gradient(135deg,var(--steel) 0 3px,transparent 3px 6px)"></i>Band on hiatus</span>' +
-        '<span><i style="background:transparent;border:1px solid var(--steel);transform:rotate(45deg);width:7px;height:7px;border-radius:0"></i>Join / departure</span>' +
+        '<span><i style="background:var(--silver)"></i>Active</span>' +
+        '<span><i style="background:repeating-linear-gradient(135deg,var(--silver) 0 3px,transparent 3px 6px)"></i>Band on hiatus</span>' +
+        '<span><i style="background:transparent;border:1px solid var(--silver);transform:rotate(45deg);width:7px;height:7px;border-radius:0"></i>Join / departure</span>' +
       '</div>' +
     '</div>' +
     '<div class="gantt__scroll"><div class="gantt__grid" style="--labelw:120px">' +
@@ -478,7 +516,7 @@
   $('#members').innerHTML = LB.members.map(function (m) {
     return '<button class="member" type="button" data-member="' + m.id + '" style="--mc:' + m.color + '">' +
       '<span class="member__status member__status--' + m.status + '">' + (m.status === 'current' ? 'Current' : 'Former') + '</span>' +
-      '<span class="member__mono">' + m.mono + '</span>' +
+      memberSigil(m) +
       '<h3>' + m.name + '</h3>' +
       '<p class="member__inst">' + m.instrument + '</p>' +
       '<p class="member__period">' + m.period + '</p>' +
@@ -500,14 +538,14 @@
   discoSorted.forEach(function (r) { typeCounts[r.type] = (typeCounts[r.type] || 0) + 1; });
 
   $('#discoChips').innerHTML =
-    '<button class="chip" type="button" data-type="all" aria-pressed="true" style="--hue:var(--steel)">All <small>' + discoSorted.length + '</small></button>' +
+    '<button class="chip" type="button" data-type="all" aria-pressed="true" style="--hue:var(--silver)">All <small>' + discoSorted.length + '</small></button>' +
     LB.releaseTypes.map(function (t) {
       return '<button class="chip" type="button" data-type="' + t.id + '" aria-pressed="false" style="--hue:' + typeHue(t.id) + '">' +
         t.label + ' <small>' + (typeCounts[t.id] || 0) + '</small></button>';
     }).join('');
 
   function typeHue(t) {
-    return { album: 'var(--c-release)', ep: 'var(--c-member)', single: 'var(--c-award)', live: 'var(--c-tour)', compilation: 'var(--c-festival)' }[t] || 'var(--steel)';
+    return { album: 'var(--c-release)', ep: 'var(--c-member)', single: 'var(--c-award)', live: 'var(--c-tour)', compilation: 'var(--c-festival)' }[t] || 'var(--silver)';
   }
 
   function renderDisco() {
@@ -544,7 +582,8 @@
   });
 
   $('#artNote').innerHTML = '<strong style="color:var(--text-dim)">On the artwork:</strong> the emblems above are original geometric illustrations generated for this page, ' +
-    'one per release, in era-appropriate palettes. They are not the official cover art and are not intended to resemble it. ' +
+    'one per release, in era-appropriate palettes, in the same heraldic style as the chapter plates. ' +
+    'They are not the official cover art and are not intended to resemble it. ' +
     'For the real sleeves, visit the band\'s <a class="src" href="https://lovebites.jp/discography/" target="_blank" rel="noopener noreferrer">official discography</a> ' +
     'or the release pages linked in each detail view.';
 
@@ -688,7 +727,7 @@
     return '<div class="mh" style="--cat:' + m.color + '">' +
         '<div class="mh__txt" style="grid-column:1/-1">' +
           '<div class="pm__hd" style="--mc:' + m.color + '">' +
-            '<span class="pm__mono">' + m.mono + '</span>' +
+            '<span class="pm__sigil">' + memberSigil(m, 86) + '</span>' +
             '<div>' +
               '<p class="mh__kicker" style="--cat:' + m.color + '">' + m.instrument + '</p>' +
               '<h2 id="modalTitle" style="margin:0">' + m.name + '</h2>' +
@@ -763,7 +802,7 @@
      is far wider and the nine letters overflow, so measure and fit it. */
   var heroTitle = $('.hero__title');
   function fitTitle() {
-    if (!heroTitle) return;
+    if (!heroTitle || !heroTitle.isConnected || heroTitle.querySelector('img')) return;
     var avail = heroTitle.parentElement.clientWidth;
     if (!avail) return;
     heroTitle.style.maxWidth = 'none';
@@ -824,6 +863,36 @@
       navToggle.setAttribute('aria-expanded', 'false');
     }
   });
+
+
+  /* If an official logo file has been dropped into assets/img/, use it for the
+     hero wordmark and the nav mark. Otherwise keep the typographic wordmark. */
+  (function brandMark() {
+    var candidates = ['assets/img/lovebites-logo.svg', 'assets/img/lovebites-logo.png'];
+    var i = 0;
+    function tryNext() {
+      if (i >= candidates.length) return;
+      var src = candidates[i++];
+      var probe = new Image();
+      probe.onload = function () { applyLogo(src); };
+      probe.onerror = tryNext;
+      probe.src = src;
+    }
+    function applyLogo(src) {
+      var h1 = document.getElementById('heroTitle');
+      if (h1) {
+        h1.innerHTML = '<img class="brand-logo" src="' + src + '" alt="LOVEBITES">';
+        h1.classList.remove('plat');
+        h1.style.fontSize = '';
+        heroTitle = null;
+      }
+      var navText = document.querySelector('[data-brand-text]');
+      if (navText) {
+        navText.outerHTML = '<img class="wm wm--img" src="' + src + '" alt="LOVEBITES">';
+      }
+    }
+    tryNext();
+  })();
 
   /* deep links: #release-<id> / #member-<id> */
   function fromHash() {
