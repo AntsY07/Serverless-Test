@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LOVEBITES — A Complete History</title>
+<meta name="description" content="An interactive, sourced history of the Japanese heavy metal band LOVEBITES: the Destrose origins, the 2016 formation, five studio albums, the 2021 hiatus, the return with fami, and the road to Budokan.">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="LOVEBITES — A Complete History">
+<meta property="og:description" content="An interactive, sourced history of the Japanese heavy metal band LOVEBITES, 2016 to the present.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Inter:wght@300..700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2308090b'/%3E%3Cpath d='M16 4l3.6 8.3 9 .8-6.8 6 2 8.9L16 23.3 8.2 28l2-8.9-6.8-6 9-.8z' fill='none' stroke='%23cfd6dd' stroke-width='1.6'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="scroll-progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<header class="topbar" id="topbar">
+  <a class="topbar__mark" href="#top" aria-label="LOVEBITES — back to top">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.2l3.9 9 9.7.85-7.35 6.45 2.2 9.55L16 23.9 7.55 29.05l2.2-9.55L2.4 13.05l9.7-.85z"/></svg>
+    <span>LOVEBITES</span>
+  </a>
+  <nav class="topbar__nav" aria-label="Sections">
+    <a href="#overview">Overview</a>
+    <a href="#story">The Story</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#lineup">Lineup</a>
+    <a href="#discography">Discography</a>
+    <a href="#legacy">Legacy</a>
+    <a href="#sources">Sources</a>
+  </nav>
+  <button class="topbar__toggle" id="navToggle" aria-expanded="false" aria-controls="navDrawer" aria-label="Open navigation">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+<div class="drawer" id="navDrawer" hidden>
+  <nav aria-label="Sections">
+    <a href="#overview">Overview</a>
+    <a href="#story">The Story</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#lineup">Lineup</a>
+    <a href="#discography">Discography</a>
+    <a href="#legacy">Legacy</a>
+    <a href="#sources">Sources</a>
+  </nav>
+</div>
+
+<main id="main">
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top">
+    <div class="hero__grain" aria-hidden="true"></div>
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="hero__inner">
+      <p class="hero__eyebrow">Tokyo &middot; Heavy Metal &middot; 2016 &rarr; present</p>
+      <h1 class="hero__title" aria-label="LOVEBITES">
+        <span>L</span><span>O</span><span>V</span><span>E</span><span>B</span><span>I</span><span>T</span><span>E</span><span>S</span>
+      </h1>
+      <p class="hero__sub">A complete, sourced history &mdash; from the ashes of Destrose to a sold-out Nippon Budokan.</p>
+      <div class="hero__stats" id="heroStats"></div>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#timeline">Enter the timeline</a>
+        <a class="btn" href="#story">Read the story</a>
+      </div>
+    </div>
+    <div class="hero__cue" aria-hidden="true"><span></span>scroll</div>
+  </section>
+
+  <!-- ============ OVERVIEW ============ -->
+  <section class="section section--overview" id="overview">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__kicker">00 &mdash; Orientation</p>
+        <h2 class="sec-head__title">Who they are</h2>
+      </header>
+      <div class="overview">
+        <div class="overview__lede" id="overviewLede"></div>
+        <aside class="factbox" id="factbox"></aside>
+      </div>
+      <div class="notice" id="methodNotice"></div>
+    </div>
+  </section>
+
+  <!-- ============ STORY / CHAPTERS ============ -->
+  <section class="section section--story" id="story">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__kicker">01 &mdash; Narrative</p>
+        <h2 class="sec-head__title">The Story in Ten Chapters</h2>
+        <p class="sec-head__blurb">Ten eras, from the backgrounds of five musicians who had never played together to a band headlining Japan's most storied arena. Jump to any chapter, or read straight through.</p>
+      </header>
+      <ol class="chapter-rail" id="chapterRail" aria-label="Chapter index"></ol>
+      <div class="chapters" id="chapters"></div>
+    </div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="section section--timeline" id="timeline">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__kicker">02 &mdash; The centrepiece</p>
+        <h2 class="sec-head__title">Interactive Timeline</h2>
+        <p class="sec-head__blurb">Every documented milestone, in order. Filter by category, jump by year, and open any linked release for the full detail.</p>
+      </header>
+
+      <div class="tl-controls" role="group" aria-label="Timeline filters">
+        <div class="tl-chips" id="tlChips"></div>
+        <div class="tl-controls__meta">
+          <button class="btn btn--ghost btn--sm" id="tlAll" type="button">All categories</button>
+          <button class="btn btn--ghost btn--sm" id="tlNone" type="button">Clear</button>
+          <p class="tl-count" id="tlCount" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="tl-layout">
+        <nav class="tl-years" id="tlYears" aria-label="Jump to year"></nav>
+        <ol class="tl" id="tl"></ol>
+      </div>
+      <p class="tl-empty" id="tlEmpty" hidden>No events match these filters. <button class="linkish" id="tlEmptyReset" type="button">Show everything</button></p>
+    </div>
+  </section>
+
+  <!-- ============ LINEUP ============ -->
+  <section class="section section--lineup" id="lineup">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__kicker">03 &mdash; Personnel</p>
+        <h2 class="sec-head__title">Lineup &amp; Members</h2>
+        <p class="sec-head__blurb">One founding bassist left; one hiatus split the band's life in two. The chart below maps every tenure against the calendar &mdash; hover or tap a bar for detail.</p>
+      </header>
+
+      <div class="gantt" id="gantt" aria-label="Lineup tenure chart"></div>
+
+      <div class="members" id="members"></div>
+    </div>
+  </section>
+
+  <!-- ============ DISCOGRAPHY ============ -->
+  <section class="section section--disco" id="discography">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__kicker">04 &mdash; Recorded output</p>
+        <h2 class="sec-head__title">Discography Explorer</h2>
+        <p class="sec-head__blurb">Studio albums, EPs, singles, live records and compilations. Select any release for tracklist, lineup, context and sources.</p>
+      </header>
+
+      <div class="disco-controls" role="group" aria-label="Discography filters">
+        <div class="tl-chips" id="discoChips"></div>
+      </div>
+
+      <div class="disco-grid" id="discoGrid"></div>
+      <p class="artnote" id="artNote"></p>
+    </div>
+  </section>
+
+  <!-- ============ LEGACY ============ -->
+  <section class="section section--legacy" id="legacy">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__kicker">05 &mdash; Standing</p>
+        <h2 class="sec-head__title">Legacy &amp; Position</h2>
+      </header>
+      <div class="legacy" id="legacyBody"></div>
+      <div class="firsts" id="firsts"></div>
+    </div>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section section--sources" id="sources">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__kicker">06 &mdash; Receipts</p>
+        <h2 class="sec-head__title">Sources &amp; Method</h2>
+        <p class="sec-head__blurb">Everything on this page is drawn from the references below. Where sources conflict or a detail could not be corroborated, the page says so inline.</p>
+      </header>
+      <div class="method" id="method"></div>
+      <div class="sources" id="sourcesList"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p class="foot__main">An independent, fan-made history. Not affiliated with LOVEBITES, Victor Entertainment, JPU Records or Napalm Records.</p>
+    <p class="foot__meta">Release emblems on this page are original geometric artwork created for this site &mdash; they are <em>not</em> the official cover art. Content current as of <span id="asOf"></span>.</p>
+  </div>
+</footer>
+
+<!-- ============ MODAL ============ -->
+<div class="modal" id="modal" hidden>
+  <div class="modal__scrim" data-close></div>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+    <button class="modal__close" type="button" data-close aria-label="Close">&times;</button>
+    <div class="modal__body" id="modalBody"></div>
+    <div class="modal__nav">
+      <button class="btn btn--ghost btn--sm" type="button" id="modalPrev">&larr; Previous</button>
+      <button class="btn btn--ghost btn--sm" type="button" id="modalNext">Next &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<noscript>
+  <div class="wrap" style="padding:3rem 0">
+    <p>This history is rendered with JavaScript so the timeline, lineup chart and discography can be filtered and explored. Please enable JavaScript, or read the plain-text source data in <code>assets/js/data.js</code>.</p>
+  </div>
+</noscript>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
