@@ -19,6 +19,7 @@ colour used only to separate timeline categories and member tenures.
 | **Interactive Timeline** | 53 documented events, 2015 → 2026, filterable by nine categories (Formation, Member, Release, Tour, Festival, Award, Hiatus, Return, Milestone), with a sticky year rail, per-event member tags, release cross-links and source links. |
 | **Lineup & Members** | A tenure chart (Gantt) plotting all six members across 2016–2026, with the hiatus shaded and join/departure points marked, plus full profiles for every member. |
 | **Discography Explorer** | 16 releases — albums, EPs, a single, live records and a compilation — filterable by type, each opening a detail view with tracklist, lineup, formats, labels, chart peaks, historical context and sources. |
+| **International Footprint** | A real world map — Natural Earth geometry, Natural Earth 1 projection — with the 16 countries they have played picked out and 41 documented locations plotted. Select any marker, or any place in the index below it, for what happened there. |
 | **Legacy** | Position in Japanese metal, international standing, and the hiatus-and-recovery story. |
 | **Sources & Method** | Every reference used, grouped by type, plus the confidence conventions. |
 
@@ -52,6 +53,8 @@ assets/img/             hand-authored SVG artwork (see below)
 | `chapter-01…10-*.svg` | One heraldic plate per narrative chapter |
 | `ornament-divider.svg` | Separator between chapters, and under the hero wordmark |
 | `ornament-rule.svg` | Small rule under each section heading |
+| `world-map.svg` | The footprint map — generated from Natural Earth geometry |
+| `photos/` | Empty by design — drop photography here, see below |
 
 Release emblems in the discography are generated in code (`MOTIFS` in `app.js`) in the same
 heraldic style, so a new release only needs a `motif` and two colours in `data.js`.
@@ -75,6 +78,43 @@ nothing in `app.js` needs to change. Source ids in each entry's `src` array reso
   drawn about private matters.
 - Content is current as of **October 2026**.
 
+## The map
+
+`assets/img/world-map.svg` is generated, not drawn. The build pulls country geometry from the
+[`world-atlas`](https://www.npmjs.com/package/world-atlas) npm package (ISC licence; the underlying
+data is [Natural Earth](https://www.naturalearthdata.com/), which is public domain), projects it
+with `d3-geo`'s Natural Earth 1 projection, and writes out the SVG plus the projected marker
+coordinates that become `LB.footprint` in `data.js`.
+
+Marker positions are percentages of the map's viewBox, so they stay aligned at every size. Japanese
+dates are labelled as the sources give them — several name the prefecture rather than the city, so
+the prefecture is used. Where a source names only a country (the 2019 China support run, the 2024
+South Korea date), the marker says so rather than inventing a city.
+
+## Photographs
+
+**There are none, and that is a limitation, not a design choice.** The build environment's network
+policy blackholes every image host — Wikimedia Commons, Unsplash, Pixabay, Openverse, the Internet
+Archive, every CDN — so no photography, official or freely-licensed, could be retrieved. Only
+GitHub, Google Fonts and the package registries are reachable, which is how the map data got in.
+
+The page is wired to use photos the moment you add them. Drop a file in `assets/img/photos/` and add
+a `photo` field to the matching entry in `data.js`:
+
+```js
+{ id:'judgement-day', …, photo:'assets/img/photos/judgement-day.jpg',
+  photoCredit:'© Victor Entertainment' }
+```
+
+Releases, members and timeline events all support it. A release photo replaces the generated emblem
+in its detail view; member and timeline photos appear inline. If the field is absent, or the file
+fails to load, the page silently falls back to the generated artwork — a missing file never breaks
+the layout. Full instructions are in `assets/img/photos/README.txt`.
+
+If you want this filled in automatically instead, allow the image hosts you care about under
+**Network access** in the cloud environment's settings (environment menu in the title bar → Edit →
+Custom, keeping the default package-manager list) and I can fetch and wire them up.
+
 ## The band's logo
 
 **The official LOVEBITES logo is not in this repository**, and the site does not ship a copy of it.
@@ -90,29 +130,41 @@ assets/img/lovebites-logo.png      (also accepted)
 
 On load the page probes for that file. If it is there, it replaces both the hero wordmark and the
 mark in the navigation bar automatically — no code change needed. If it is absent (the current
-state), the page falls back to the typographic wordmark set in Cinzel, and you will see two
-harmless 404s in the console from the probe. See `assets/img/README-logo.txt` and the
+state), the page falls back to the typographic wordmark set in Cinzel.
+
+Note that in the no-logo state the probe logs two 404s to the console. That is the feature working,
+not a fault; it disappears the moment either file exists. See `assets/img/README-logo.txt` and the
 `brandMark()` function in `app.js`.
 
 ## A note on the artwork
 
-Every image in `assets/img/` is **original artwork drawn for this project** — heraldic plates,
-the wolf mark, the ornaments and the hero backdrop — as are the release emblems generated in
+Every illustration in `assets/img/` is **original artwork drawn for this project** — heraldic
+plates, the wolf mark, the ornaments and the hero backdrop — as are the release emblems generated in
 `app.js`. None of it is the band's own art, none of it reproduces their cover sleeves, and the wolf
 mark is an original heraldic rendering rather than a copy of the band's emblem.
 
-There are **no photographs** on the page. Press and live photography of the band is copyrighted and
-could not be licensed or retrieved here, so the design uses illustration throughout instead. For the
-real sleeves and photographs, follow the official discography and label links on the page.
+The one exception is `world-map.svg`, whose geometry comes from Natural Earth (public domain) via
+the `world-atlas` package, as described above.
+
+For the real sleeves and photographs, follow the official discography and label links on the page.
 
 ## Accessibility & performance
 
 - No JavaScript framework and no runtime dependencies; one webfont request, with declared fallbacks.
+  The map is built offline and committed as a static SVG, so `world-atlas`, `d3-geo` and
+  `topojson-client` are build-time only and are not shipped.
 - The wordmark is measured and fitted at runtime so it never clips, whatever font actually loads.
 - Keyboard support throughout: skip link, visible focus rings, `Esc` to close detail views,
   `←`/`→` to move between them, and a focus trap while one is open.
 - `prefers-reduced-motion` disables every animation and reveal transition.
 - Print styles strip the chrome and expand all revealed content.
+
+## Rebuilding the map
+
+```bash
+npm install world-atlas@2 topojson-client d3-geo
+node tools/build-map.js     # writes assets/img/world-map.svg and the marker list
+```
 
 ## Licence / status
 

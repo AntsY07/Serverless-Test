@@ -268,6 +268,20 @@
     '</svg>';
   }
 
+
+  /* Optional photography. Any release, member or timeline entry may carry a
+     `photo` (plus optional `photoCredit`); when absent — or when the file
+     fails to load — the page falls back to the generated artwork, so a
+     missing file never breaks the layout. See assets/img/photos/README.txt. */
+  function photoBlock(obj, alt) {
+    if (!obj.photo) return '';
+    return '<figure class="shot">' +
+      '<img src="' + obj.photo + '" alt="' + alt.replace(/"/g, '') + '" loading="lazy" ' +
+        'onerror="this.closest(\'figure\').remove()">' +
+      (obj.photoCredit ? '<figcaption>' + obj.photoCredit + '</figcaption>' : '') +
+    '</figure>';
+  }
+
   /* --------------------------- small helpers --------------------------- */
   function srcLinks(ids) {
     if (!ids || !ids.length) return '';
@@ -366,7 +380,7 @@
     var h = '<li class="tl-item" data-cat="' + e.cat + '" data-year="' + e.y + '" style="--cat:' + c.color + '">' +
       '<div class="tl-card">' +
         '<div class="tl-card__top"><span class="tl-date">' + e.label + '</span><span class="tag">' + c.label + '</span></div>' +
-        '<h4>' + e.t + '</h4><p>' + e.x + '</p>';
+        '<h4>' + e.t + '</h4>' + photoBlock(e, e.t) + '<p>' + e.x + '</p>';
     if (e.flag) h += '<p class="flag">' + (e.confidence === 'reported' ? '<strong>Reported:</strong> ' : '<strong>Note:</strong> ') + e.flag + '</p>';
     var foot = '';
     if (e.who) foot += memberChips(e.who);
@@ -587,6 +601,61 @@
     'For the real sleeves, visit the band\'s <a class="src" href="https://lovebites.jp/discography/" target="_blank" rel="noopener noreferrer">official discography</a> ' +
     'or the release pages linked in each detail view.';
 
+
+  /* --------------------------- international footprint --------------------------- */
+  (function footprint() {
+    var canvas = $('#mapCanvas'), cap = $('#mapCap'), list = $('#mapList'), stats = $('#mapStats');
+    if (!canvas || !LB.footprint) return;
+
+    var byCountry = {};
+    LB.footprint.forEach(function (p) { (byCountry[p.c] = byCountry[p.c] || []).push(p); });
+    var countryNames = Object.keys(byCountry).sort(function (a, b) { return byCountry[b].length - byCountry[a].length; });
+
+    stats.innerHTML = [
+      { n: countryNames.length, l: 'Countries played' },
+      { n: LB.footprint.length, l: 'Documented locations' },
+      { n: '4', l: 'Continents' },
+      { n: '2017', l: 'First show outside Japan' },
+      { n: '4', l: 'First-time countries, 2026' }
+    ].map(function (s) { return '<div><b>' + s.n + '</b><small>' + s.l + '</small></div>'; }).join('');
+
+    canvas.insertAdjacentHTML('beforeend', LB.footprint.map(function (p, i) {
+      return '<button class="pin pin--t' + p.t + '" type="button" data-pin="' + i + '"' +
+        ' style="left:' + p.x + '%;top:' + p.y + '%"' +
+        ' aria-label="' + p.n + ', ' + p.c + '"></button>';
+    }).join(''));
+
+    list.innerHTML = countryNames.map(function (cn) {
+      return '<section><h3>' + cn + ' <span style="color:var(--text-faint);font-size:.8em">' + byCountry[cn].length + '</span></h3><ul>' +
+        byCountry[cn].map(function (p) {
+          return '<li><button type="button" data-pin="' + LB.footprint.indexOf(p) + '">' + p.n + '</button></li>';
+        }).join('') + '</ul></section>';
+    }).join('');
+
+    var idle = '<p class="hint">Select any marker on the map, or any place below, for what happened there.</p>';
+    cap.innerHTML = idle;
+
+    function show(i) {
+      var p = LB.footprint[i];
+      if (!p) return;
+      cap.innerHTML = '<h3>' + p.n + '</h3>' +
+        '<p class="meta">' + p.c + ' &middot; ' + p.years + '</p>' +
+        '<p>' + p.note + '</p>';
+      $$('.pin.is-on, .maplist button.is-on').forEach(function (n) { n.classList.remove('is-on'); });
+      $$('[data-pin="' + i + '"]').forEach(function (n) { n.classList.add('is-on'); });
+    }
+
+    function onEvent(ev) {
+      var b = ev.target.closest('[data-pin]');
+      if (b) show(+b.dataset.pin);
+    }
+    canvas.addEventListener('click', onEvent);
+    canvas.addEventListener('mouseover', onEvent);
+    canvas.addEventListener('focusin', onEvent);
+    list.addEventListener('click', onEvent);
+    list.addEventListener('focusin', onEvent);
+  })();
+
   /* --------------------------- legacy + sources --------------------------- */
   $('#legacyBody').innerHTML = LB.legacy.map(function (l) {
     return '<div class="reveal"><h3>' + l.h + '</h3>' + l.p.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>';
@@ -687,7 +756,7 @@
     }).join('');
 
     return '<div class="mh" style="--cat:' + hue + '">' +
-        '<div class="mh__art">' + makeArt(r.art, r.title) + '</div>' +
+        '<div class="mh__art">' + (r.photo ? photoBlock(r, r.title + ' cover art') : makeArt(r.art, r.title)) + '</div>' +
         '<div class="mh__txt">' +
           '<p class="mh__kicker">' + typeMap[r.type].label + ' &middot; ' + r.year + '</p>' +
           '<h2 id="modalTitle">' + r.title + '</h2>' +
@@ -741,7 +810,7 @@
         (m.note ? '<p class="flag" style="margin-bottom:1.4rem"><strong>Note:</strong> ' + m.note + '</p>' : '') +
         '<div class="mb__grid">' +
           '<div>' +
-            '<h3>Background</h3>' + m.bg.map(function (p) { return '<p>' + p + '</p>'; }).join('') +
+            '<h3>Background</h3>' + photoBlock(m, m.name) + m.bg.map(function (p) { return '<p>' + p + '</p>'; }).join('') +
           '</div>' +
           '<div>' +
             '<h3>Notable contributions</h3>' +
